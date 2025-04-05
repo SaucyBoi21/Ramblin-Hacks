@@ -40,6 +40,24 @@
         .content {
             padding: 20px;
         }
+        .video-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .video-container iframe {
+            width: 80%;
+            height: 400px;
+        }
+        .bordered-gif {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border: 4px solid #0D1B2A; 
+        }
     </style>
 </head>
 <body>
@@ -54,6 +72,10 @@
         <div class="topbar-right">
             <a href="/about">About</a>
         </div>
+    </div>
+
+    <div class="gif-container" style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+        <img src="{{ url_for('static', filename='tempgif.gif') }}" alt="GIF" class="bordered-gif" width="50%" height="auto">
     </div>
 
     <div class="content">
