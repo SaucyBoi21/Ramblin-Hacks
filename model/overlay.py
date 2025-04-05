@@ -3,7 +3,7 @@ import mediapipe as mp
 import numpy as np
 
 # Path to your soccer video file
-video_path = 'model/data/videos/1.mp4'
+video_path = 'model/data/videos/3.mp4'
 output_path = 'app/processed_data/clip6.mp4'
 
 # Initialize MediaPipe Pose model
@@ -57,7 +57,7 @@ while cap.isOpened():
     dilated_edges = cv2.dilate(edges, kernel, iterations=1)
 
     # Hough Line Detection
-    lines = cv2.HoughLinesP(dilated_edges, 1, np.pi / 180, threshold=120,
+    lines = cv2.HoughLinesP(dilated_edges, 1, np.pi / 180, threshold=200,
                             minLineLength=120, maxLineGap=5)
 
     valid_points = []
