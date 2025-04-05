@@ -14,16 +14,15 @@ pose = mp_pose.Pose(static_image_mode=False,
                     min_detection_confidence=0.5,
                     min_tracking_confidence=0.5)
 
-# Initialize MediaPipe drawing utils
 mp_drawing = mp.solutions.drawing_utils
 
-# Open the video file
+# Open video
 cap = cv2.VideoCapture(video_path)
 if not cap.isOpened():
     print(f"Error: Could not open video file: {video_path}")
     exit()
 
-# Get video properties for saving the output
+# Output video setup
 frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 fps = cap.get(cv2.CAP_PROP_FPS)
@@ -34,20 +33,16 @@ while cap.isOpened():
     ret, frame = cap.read()
     if not ret:
         break
-    # Convert to grayscale
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-    # Apply Gaussian Blur
+    top_half = frame[:frame_height // 2, :]  # Only top half of the frame
+
+    gray = cv2.cvtColor(top_half, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
-
-    # Edge detection
     edges = cv2.Canny(blurred, 50, 150)
 
-    # Dilate edges slightly if needed
     kernel = np.ones((3, 3), np.uint8)
     dilated_edges = cv2.dilate(edges, kernel, iterations=1)
 
-    # Hough Line Detection
     lines = cv2.HoughLinesP(dilated_edges, 1, np.pi / 180, threshold=120,
                             minLineLength=120, maxLineGap=5)
 
@@ -59,20 +54,24 @@ while cap.isOpened():
             angle = np.abs(np.arctan2(y2 - y1, x2 - x1) * 180 / np.pi)
             length = np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
-            # Filter based on angle, length, and position
+            # Only accept near-vertical or near-horizontal lines
             if (85 <= angle <= 95 or angle <= 5):
-                valid_points.append((x1, y1))
-                valid_points.append((x2, y2))
+                # Offset y back to full-frame coordinates
+                y1_full = y1
+                y2_full = y2
+                valid_points.append((x1, y1_full))
+                valid_points.append((x2, y2_full))
 
-    # Draw bounding box around valid points
+                # Draw the line (in blue)
+                # cv2.line(frame, (x1, y1_full), (x2, y2_full), (255, 0, 0), 2)
+
+    # Draw bounding box if valid lines found
     if valid_points:
         pts = np.array(valid_points)
         x, y, w, h = cv2.boundingRect(pts)
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 3)
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 255), 3)
 
-    # Show the frame
-    cv2.imshow("Goal Post Detection", frame)
-
+    # Pose estimation
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     results = pose.process(rgb_frame)
 
@@ -84,8 +83,8 @@ while cap.isOpened():
         )
 
     out.write(frame)
+    cv2.imshow("Goal Post Detection (Top Half Only)", frame)
 
-    cv2.imshow('Processed Video', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
