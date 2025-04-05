@@ -3,7 +3,7 @@ import mediapipe as mp
 import numpy as np
 
 # Path to your soccer video file
-video_path = 'app/Data/morspn6.mp4'
+video_path = 'model/data/videos/1.mp4'
 output_path = 'app/processed_data/clip6.mp4'
 
 # Initialize MediaPipe Pose model
@@ -30,12 +30,21 @@ fps = cap.get(cv2.CAP_PROP_FPS)
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 out = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))
 
+# Calculate the height and width for the middle third of the video
+upper_third_height = int(frame_height / 3)
+middle_third_width_start = int(frame_width / 3)
+middle_third_width_end = int(2 * frame_width / 3)
+
 while cap.isOpened():
     ret, frame = cap.read()
     if not ret:
         break
-    # Convert to grayscale
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+    # Crop the frame to focus on the middle third (vertically and horizontally)
+    cropped_frame = frame[:upper_third_height, middle_third_width_start:middle_third_width_end]
+
+    # Convert cropped frame to grayscale
+    gray = cv2.cvtColor(cropped_frame, cv2.COLOR_BGR2GRAY)
 
     # Apply Gaussian Blur
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
@@ -68,7 +77,7 @@ while cap.isOpened():
     if valid_points:
         pts = np.array(valid_points)
         x, y, w, h = cv2.boundingRect(pts)
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 3)
+        cv2.rectangle(frame, (x + middle_third_width_start, y), (x + middle_third_width_start + w, y + h), (255, 0, 0), 3)
 
     # Show the frame
     cv2.imshow("Goal Post Detection", frame)
