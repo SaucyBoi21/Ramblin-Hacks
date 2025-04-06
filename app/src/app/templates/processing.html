@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PK Prophet</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="shortcut icon" href="../static/icon.svg" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Judson:400,700" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-[#191919] flex">
+
+    <!-- Sidebar -->
+    <!-- Sidebar -->
+    <div class="sidebar bg-[#00CF78] w-1/5 min-h-screen fixed flex flex-col py-10 px-6 items-center">
+        <div class="flex flex-col items-baseline">
+            <!-- Update the first SVG to have black color -->
+            <object type="image/svg+xml" data="../static/icon.svg" class="w-36 h-36 mx-auto text-black fill-current"></object>
+
+            <!-- PK Prophet Section -->
+            <a href="/" class="flex items-center gap-3 mb-5 mt-5"> <!-- Flex container for the logo and header -->
+                <span class="text-[#00554B] text-5xl font-bold header hover:underline cursor-pointer">PK Prophet</span>
+                <img src="../static/arrow.svg" class="h-8 w-8"> <!-- Keep the arrow next to the header -->
+            </a>
+
+            <!-- Dotted Line Divider -->
+            <div class="border-t-4 border-dashed border-[#00554B] w-full mb-5"></div>
+
+            <!-- About Section -->
+            <a href="/about" class="flex items-center gap-3 mb-5"> <!-- Flex container for the logo and header -->
+                <span class="text-[#00554B] text-5xl font-bold header hover:underline cursor-pointer">About</span>
+                <img src="../static/arrow.svg" class="h-8 w-8"> <!-- Keep the arrow next to the header -->
+            </a>
+        </div>
+    </div>
+
+
+    <!-- Main Content -->
+    <div class="content ml-[25%] w-3/4 flex flex-col justify-center items-center px-10 py-20 mt-15 gap-40">
+                <!-- About Page Content -->
+                <video controls class="bordered-gif max-w-full h-auto">
+                <source src="/uploads/processed/currentVidProc.mp4" type="video/mp4">
+                </video>
+    <div class="text-white px-10 py-20 max-w-5xl mx-auto flex flex-col gap-16 font-sans">
+
+    
+  
+    </div>
+    </div>
+
+</body>
+</html>

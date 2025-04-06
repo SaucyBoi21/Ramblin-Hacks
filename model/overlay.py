@@ -3,7 +3,7 @@ import mediapipe as mp
 import numpy as np
 
 # Path to your soccer video file
-video_path = 'model/data/videos/3.mp4'
+video_path = 'model/data/videos/4.mp4'
 output_path = 'app/processed_data/clip6.mp4'
 
 # Initialize MediaPipe Pose model
