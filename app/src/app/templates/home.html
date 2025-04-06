@@ -2,96 +2,65 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hello Flask</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, #E0E1DD, #778da95b); /* Gradient background */
-        }
-
-        .topbar {
-            background-color: #0d1b2a;
-            overflow: hidden;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .topbar-left,
-        .topbar-right {
-            display: flex;
-        }
-
-        .topbar a {
-            color: #f2f2f2;
-            text-align: center;
-            padding: 12px 16px;
-            text-decoration: none;
-            font-size: 17px;
-        }
-
-        .topbar a:hover {
-            background-color: #575757;
-            color: white;
-        }
-
-        .content {
-            padding: 20px;
-            font-size: large;
-            color: #1B263B;
-            align-items: left;
-            width: 800px;
-            margin: 0 auto;
-        }
-        .video-container {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-        }
-
-        .video-container iframe {
-            width: 80%;
-            height: 400px;
-        }
-        .bordered-gif {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            border: 4px solid #0D1B2A; 
-        }
-    </style>
+    <title>PK Prophet</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="../static/icon.svg" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Judson:400,700" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
+<body class="bg-[#191919] flex">
 
-    <div class="topbar">
-        <div class="topbar-left">
-            <a href="/" style="display: flex; align-items: center;">
-                <object type="image/svg+xml" data="/static/21Qa9O01.svg" width="50px" height="40px"></object>
-                <span style="margin-left: 0px;">PK Prophet</span>
+    <!-- Sidebar -->
+    <!-- Sidebar -->
+    <div class="sidebar bg-[#00CF78] w-1/5 min-h-screen fixed flex flex-col py-10 px-6 items-center">
+        <div class="flex flex-col items-baseline">
+            <!-- Update the first SVG to have black color -->
+            <object type="image/svg+xml" data="../static/icon.svg" class="w-36 h-36 mx-auto text-black fill-current"></object>
+
+            <!-- PK Prophet Section -->
+            <a href="home.html" class="flex items-center gap-3 mb-5 mt-5"> <!-- Flex container for the logo and text -->
+                <span class="text-[#00554B] text-5xl font-bold header hover:underline cursor-pointer">PK Prophet</span>
+                <img src="../static/arrow.svg" class="h-8 w-8"> <!-- Keep the arrow next to the text -->
+            </a>
+
+            <!-- Dotted Line Divider -->
+            <div class="border-t-4 border-dashed border-[#00554B] w-full mb-5"></div>
+
+            <!-- About Section -->
+            <a href="about.html" class="flex items-center gap-3 mb-5"> <!-- Flex container for the logo and text -->
+                <span class="text-[#00554B] text-5xl font-bold header hover:underline cursor-pointer">About</span>
+                <img src="../static/arrow.svg" class="h-8 w-8"> <!-- Keep the arrow next to the text -->
             </a>
         </div>
-        <div class="topbar-right">
-            <a href="/about">About</a>
-        </div>
-    </div>
-    <br>
-    <div class="content" style="text-align: left;">
-        <div class="gif-container" style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
-            <img src="{{ url_for('static', filename='tempgif.gif') }}" alt="GIF" class="bordered-gif" width="100%" height="auto">
-        </div>
-        <h1>Power Up Your PKs!</h1>
-        <p>With PK Prophet's AI-Powered training analysis. Our image anaylsis software partnered with a trained ML model will read your body movement and predict where your shot will go. For goalies, analyze your oppenents tendencies and never let another shot in again.</p>
-        <h1>How it Works</h1>
-        <p>Just upload a clip of your penalty shot from the moment the shooter's motion starts to the moment the ball crosses the goal line. Drag your mp4 file into the box below, and in a few moments our program will return your results.</p>
-
-
     </div>
 
-    
+
+    <!-- Main Content -->
+    <div class="content ml-[25%] w-3/4 flex flex-col justify-center items-center px-10 py-20 mt-15 gap-40">
+        <div class="content-inner flex flex-row justify-center items-center gap-10 w-full">
+            <div class="word-container w-1/2 flex flex-col gap-8 pt-12">
+                <div class="header-1 text-6xl text-white font-bold header">
+                    We are revolutionizing the Penalty Kick...
+                </div>
+                <div class="text text-white text-2xl">
+                    See how we do it by uploading a video of your favorite one:
+                </div>
+
+                <button class="upload max-w-[25%] text" role="button">Upload</button>
+
+            </div>
+            <div class="gif-container w-1/2 flex flex-col justify-center">
+                <img src="../static/tempgif.gif" alt="GIF" class="bordered-gif max-w-full h-auto">
+                <div class="flex items-center pt-5">
+                    <span class="gif-caption text-[#00CF78] text text-3xl mt-10 mr-2">Then watch the magic unfold like this!</span>
+                    <img src="../static/up-arrow.svg" class="h-15 w-15">
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
