@@ -20,7 +20,7 @@ def process_video(input_path, output_path_color, output_path_bw):
     frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fps = cap.get(cv2.CAP_PROP_FPS)
-    fourcc = cv2.VideoWriter_fourcc(*'H264')  # browser-friendly
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # browser-friendly
 
     out_color = cv2.VideoWriter(output_path_color, fourcc, fps, (frame_width, frame_height))
     out_bw = cv2.VideoWriter(output_path_bw, fourcc, fps, (frame_width, frame_height))
