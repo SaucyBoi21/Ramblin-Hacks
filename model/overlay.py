@@ -2,7 +2,7 @@ import cv2
 import mediapipe as mp
 import numpy as np
 
-for i in range(21,101):
+for i in range(1,101):
     # Path to your soccer video file
     video_path = f'model/data/videos/{i}.mp4'  # This will generate video paths like 'model/data/videos/21.mp4', 'model/data/videos/22.mp4', etc.
     output_path = f'app/processed_data/clip{i}_skeleton_hough_bw.mp4'
