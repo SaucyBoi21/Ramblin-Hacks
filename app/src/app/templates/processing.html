@@ -139,13 +139,13 @@
 
         <div id="videoContainer" style="display: none;">
             <video id="videoPlayer" class="bordered-gif" width="600" preload="metadata">
-                <source src="{{ url_for('uploaded_file', filename='currentVidPred.mp4') }}?t={{ timestamp() }}" type="video/mp4">
+                <source src="/uploads/processed/currentVidPred.mp4?{{ timestamp() }}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
 
         <div id="loadingSpinner" style="text-align: center;">
-            <p>Loading video... (Refresh the page)</p>
+            <p>Loading video...</p>
         </div>
 
         <input type="range" id="frameSlider" value="0" step="0.033" min="0" max="100" class="slider" />
@@ -188,16 +188,5 @@
         </div>
 
     </div>
-    <script>
-        // let reload = 0;
-        // window.onload = function() {
-        //     if (reload == 0) {
-        //         setTimeout(function() {
-        //             location.reload();
-        //         }, 2000); 
-        //         reload = 1;
-        //     }
-        // };
-    </script>
 </body>
 </html>
