@@ -1,3 +1,4 @@
-# PK
+# PK Prophet
 
-Team Members: Saahas Swaroop, Stephen Viray, Vivaan Rajesh, Andrew Pauley
+A Ramblin' Hacks project created by Saahas Swaroop, Stephen Viray, Vivaan Rajesh, and Andrew Pauley.
+
