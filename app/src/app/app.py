@@ -4,6 +4,8 @@ import threading
 from overlayFunc import process_video
 from datetime import datetime
 from overlayFuncMap import overlay_prediction
+import numpy as np
+import cv2
 
 from tensorflow.keras.models import load_model
 
@@ -22,11 +24,50 @@ os.makedirs(PROCESSED_FOLDER, exist_ok=True)
 def process_video_in_background(input_path, output_path, output_path_BW):
     try:
         process_video(input_path, output_path, output_path_BW)
-        predPos = (7, 7)
+        npArray = extract_and_resize_frames("/Users/andypauley/Documents/GitHub/Ramblin-Hacks/app/src/app/uploads/processed/currentVidPred.mp4", target_size=(224,224), max_frames=120)
+        #print(npArray)
+        cnnOut = np.expand_dims(CNN.predict(npArray), axis=0)
+        print(cnnOut.shape)
+        lstmOut = LSTM.predict(cnnOut)
+        #print(lstmOut)
+        print(lstmOut.shape)
+        print(lstmOut[0][-1][0], lstmOut [0][-1][1])
+        print(lstmOut.any())
         output_path_pred = os.path.join(PROCESSED_FOLDER, "currentVidPred.mp4")
-        overlay_prediction(input_path, output_path_pred, predPos)
+        overlay_prediction(input_path, output_path_pred, lstmOut)
     except Exception as e:
         print(f"Processing error: {e}")
+
+def extract_and_resize_frames(video_path, target_size=(224,224), max_frames=120):
+     cap = cv2.VideoCapture(video_path)
+     frames = []
+     
+     while len(frames) < max_frames:
+         ret, frame = cap.read()
+         if not ret:
+             break
+     
+         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+         frame_resized = cv2.resize(frame, target_size)
+         frame_resized = frame_resized / 255.0
+         frames.append(frame_resized)
+     
+     #while len(frames) < max_frames:
+     #    frames.append(np.zeros((640, 360)))
+ 
+     frames = padding(frames, 120)
+     
+     cap.release()
+     return np.array(frames)
+ 
+def padding(frames, max_frames):
+     new_frames = frames
+     while len(new_frames) < max_frames:
+         zero_array = np.zeros((224,224, 3))
+         new_frames.append(zero_array)
+     
+     return new_frames
+ 
 
 @app.template_global()
 def timestamp():
