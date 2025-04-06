@@ -67,25 +67,24 @@ body {
   }
 
   .slider {
-    width: 600px;  /* Matches the video width */
+    width: 600px;
     margin-top: 10px;
     cursor: pointer;
-    -webkit-appearance: none; /* Remove default webkit styles */
-    appearance: none; /* Remove default styling for Firefox and other browsers */
-    height: 8px;  /* Track height */
-    background: #ddd;  /* Track color */
+    -webkit-appearance: none;
+    appearance: none;
+    height: 8px;
+    background: #ddd;
     border-radius: 5px;
   }
 
-  /* Style for the slider thumb (the draggable part) */
   .slider::-webkit-slider-thumb {
-    width: 20px; /* Thumb width */
-    height: 20px; /* Thumb height */
-    background: #00CF78;  /* Thumb color */
-    border-radius: 50%;  /* Round thumb */
+    width: 20px;
+    height: 20px;
+    background: #00CF78;
+    border-radius: 50%;
     border: none;
     cursor: pointer;
-    -webkit-appearance: none; /* Remove default appearance in WebKit browsers */
+    -webkit-appearance: none;
   }
 
   .slider::-moz-range-thumb {
