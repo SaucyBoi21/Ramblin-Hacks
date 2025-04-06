@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PK Prophet</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="shortcut icon" href="../static/icon.svg" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        #loadingScreen {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+        }
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #00CF78;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-[#191919] flex">
+    <div id="loadingScreen" class="flex justify-center items-center">
+        <div class="flex flex-col items-center">
+            <div class="text-white text-2xl mb-4">Uploading and Processing...</div>
+            <div class="loader"></div>
+        </div>
+    </div>
+
+    <script>
+        setTimeout(function() {
+            window.location.href = "{{ url_for('results') }}";
+        }, 5000); 
+    </script>
+</body>
+</html>
