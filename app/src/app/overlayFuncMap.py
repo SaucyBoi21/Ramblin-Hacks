@@ -54,7 +54,7 @@ def overlay_prediction(video_path, output_path, predicted_position):
                 if (85 <= angle <= 95 or angle <= 5):
                     valid_points.extend([(x1, y1), (x2, y2)])
 
-        # Draw bounding box around Hough lines (goalposts)
+        # Draw bounding box around Hough lines
         goal_rect = None
         if valid_points:
             pts = np.array(valid_points)
@@ -66,7 +66,7 @@ def overlay_prediction(video_path, output_path, predicted_position):
               (255, 0, 0), 4)  # Blue and thicker
 
 
-        # Draw predicted ball position if valid
+        # Draw predicted ball position
         if predicted_position and goal_rect:
             ball_x_m, ball_y_m = predicted_position
             goal_x, goal_y, goal_w, goal_h = goal_rect
