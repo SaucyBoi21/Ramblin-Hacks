@@ -43,7 +43,6 @@ body {
     font-family: 'text-font';
 }
 
-/* CSS */
 .upload {
     background-color: #00CF78;
     border-radius: 100px;
@@ -51,12 +50,12 @@ body {
     color: #00554B;
     cursor: pointer;
     display: inline-block;
-    padding: 7px 20px;
+    padding: 10px 30px;
     text-align: center;
     text-decoration: none;
     transition: all 250ms;
     border: 0;
-    font-size: 16px;
+    font-size: 18px;
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
