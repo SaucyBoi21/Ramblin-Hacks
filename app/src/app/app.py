@@ -5,6 +5,14 @@ from overlayFunc import process_video
 from datetime import datetime
 from overlayFuncMap import overlay_prediction
 
+from tensorflow.keras.models import load_model
+
+CNN = load_model("../app/weights/full_CNN.keras")
+CNN.load_weights("../app/weights/CNN.weights.h5")
+
+LSTM = load_model("../app/weights/full_LSTM.keras")
+LSTM.load_weights("../app/weights/LSTM.weights.h5")
+
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
 PROCESSED_FOLDER = 'uploads/processed'
