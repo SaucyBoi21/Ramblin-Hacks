@@ -69,8 +69,8 @@ def overlay_prediction(video_path, output_path, predicted_position):
 
         # Draw predicted ball position
         if predicted_position and goal_rect:
-            ball_x_m = 1.2
-            ball_y_m = 1.2
+            ball_x_m = 6.2
+            ball_y_m = 0.2
             #ball_x_m, ball_y_m = predicted_position[0][k]
             goal_x, goal_y, goal_w, goal_h = goal_rect
 
