@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>PK Prophet</title>
-    <link rel="stylesheet" href="styles.css">
+    <<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="shortcut icon" href="../static/icon.svg" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +21,7 @@
             <object type="image/svg+xml" data="../static/icon.svg" class="w-36 h-36 mx-auto text-black fill-current"></object>
 
             <!-- PK Prophet Section -->
-            <a href="home.html" class="flex items-center gap-3 mb-5 mt-5"> <!-- Flex container for the logo and header -->
+            <a href="/" class="flex items-center gap-3 mb-5 mt-5"> <!-- Flex container for the logo and header -->
                 <span class="text-[#00554B] text-5xl font-bold header hover:underline cursor-pointer">PK Prophet</span>
                 <img src="../static/arrow.svg" class="h-8 w-8"> <!-- Keep the arrow next to the header -->
             </a>
@@ -30,7 +30,7 @@
             <div class="border-t-4 border-dashed border-[#00554B] w-full mb-5"></div>
 
             <!-- About Section -->
-            <a href="about.html" class="flex items-center gap-3 mb-5"> <!-- Flex container for the logo and header -->
+            <a href="/about" class="flex items-center gap-3 mb-5"> <!-- Flex container for the logo and header -->
                 <span class="text-[#00554B] text-5xl font-bold header hover:underline cursor-pointer">About</span>
                 <img src="../static/arrow.svg" class="h-8 w-8"> <!-- Keep the arrow next to the header -->
             </a>
