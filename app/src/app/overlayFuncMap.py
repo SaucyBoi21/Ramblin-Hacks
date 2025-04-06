@@ -28,9 +28,8 @@ def overlay_prediction(video_path, output_path, predicted_position):
     upper_third_height = int(frame_height / 3)
     middle_third_width_start = int(frame_width / 3)
     middle_third_width_end = int(2 * frame_width / 3)
-    k=0
+
     while cap.isOpened():
-        k += 1
         ret, frame = cap.read()
         if not ret:
             break
@@ -69,9 +68,7 @@ def overlay_prediction(video_path, output_path, predicted_position):
 
         # Draw predicted ball position
         if predicted_position and goal_rect:
-            ball_x_m = 1.2
-            ball_y_m = 1.2
-            #ball_x_m, ball_y_m = predicted_position[0][k]
+            ball_x_m, ball_y_m = predicted_position
             goal_x, goal_y, goal_w, goal_h = goal_rect
 
             ball_x_px = int(goal_x + (ball_x_m / GOAL_WIDTH_M) * goal_w + middle_third_width_start)
