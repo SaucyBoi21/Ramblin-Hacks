@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Processing Complete - PK Prophet</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="shortcut icon" href="../static/icon.svg" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-[#191919] flex">
+    <div class="flex justify-center items-center">
+        <div class="flex flex-col items-center">
+            <div class="header" style="color: #00CF78; font-size: 2rem; font-weight: 700;">Video Processed Successfully!</div>
+            <div class="video-container">
+                <video controls>
+                    <source src="{{ url_for('uploaded_file', filename='currentVidProc.mp4') }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            setTimeout(function() {
+                location.reload();
+            }, 3000); 
+        };
+    </script>
+</body>
+</html>
