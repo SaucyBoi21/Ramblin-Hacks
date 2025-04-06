@@ -1,29 +1,29 @@
 import cv2
 import mediapipe as mp
 import numpy as np
-import os
 
-def process_video(input_path, output_path_color, output_path_bw):
+def overlay_prediction(video_path, output_path, predicted_position):
+    GOAL_WIDTH_M = 7.32
+    GOAL_HEIGHT_M = 2.44
+
+    # Initialize MediaPipe Pose
     mp_pose = mp.solutions.pose
     pose = mp_pose.Pose(static_image_mode=False,
                         model_complexity=1,
                         enable_segmentation=False,
                         min_detection_confidence=0.5,
                         min_tracking_confidence=0.5)
-
     mp_drawing = mp.solutions.drawing_utils
 
-    cap = cv2.VideoCapture(input_path)
+    cap = cv2.VideoCapture(video_path)
     if not cap.isOpened():
-        raise ValueError(f"Could not open video file: {input_path}")
+        raise ValueError(f"Could not open video: {video_path}")
 
     frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fps = cap.get(cv2.CAP_PROP_FPS)
-    fourcc = cv2.VideoWriter_fourcc(*'H264')  # browser-friendly
-
-    out_color = cv2.VideoWriter(output_path_color, fourcc, fps, (frame_width, frame_height))
-    out_bw = cv2.VideoWriter(output_path_bw, fourcc, fps, (frame_width, frame_height))
+    fourcc = cv2.VideoWriter_fourcc(*'H264')
+    out = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))
 
     upper_third_height = int(frame_height / 3)
     middle_third_width_start = int(frame_width / 3)
@@ -34,13 +34,7 @@ def process_video(input_path, output_path_color, output_path_bw):
         if not ret:
             break
 
-        # Copy original frame for color output
-        color_frame = frame.copy()
-
-        # Create black background frame for BW output
-        bw_frame = np.zeros_like(frame)
-
-        # --- Hough Line Detection ---
+        # Hough Line Detection
         cropped_frame = frame[:upper_third_height, middle_third_width_start:middle_third_width_end]
         gray = cv2.cvtColor(cropped_frame, cv2.COLOR_BGR2GRAY)
         blurred = cv2.GaussianBlur(gray, (5, 5), 0)
@@ -57,42 +51,46 @@ def process_video(input_path, output_path_color, output_path_bw):
             for line in lines:
                 x1, y1, x2, y2 = line[0]
                 angle = np.abs(np.arctan2(y2 - y1, x2 - x1) * 180 / np.pi)
-                length = np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
                 if (85 <= angle <= 95 or angle <= 5):
-                    valid_points.append((x1, y1))
-                    valid_points.append((x2, y2))
+                    valid_points.extend([(x1, y1), (x2, y2)])
 
+        # Draw bounding box around Hough lines (goalposts)
+        goal_rect = None
         if valid_points:
             pts = np.array(valid_points)
-            x, y, w, h = cv2.boundingRect(pts)
-            # Draw on both frames
-            cv2.rectangle(color_frame, (x + middle_third_width_start, y),
-                          (x + middle_third_width_start + w, y + h), (255, 0, 0), 3)
-            cv2.rectangle(bw_frame, (x + middle_third_width_start, y),
-                          (x + middle_third_width_start + w, y + h), (255, 255, 255), 3)
+            goal_x, goal_y, goal_w, goal_h = cv2.boundingRect(pts)
+            goal_rect = (goal_x, goal_y, goal_w, goal_h)
+            cv2.rectangle(frame,
+              (goal_x + middle_third_width_start, goal_y),
+              (goal_x + middle_third_width_start + goal_w, goal_y + goal_h),
+              (255, 0, 0), 4)  # Blue and thicker
 
-        # --- Pose Detection ---
+
+        # Draw predicted ball position if valid
+        if predicted_position and goal_rect:
+            ball_x_m, ball_y_m = predicted_position
+            goal_x, goal_y, goal_w, goal_h = goal_rect
+
+            ball_x_px = int(goal_x + (ball_x_m / GOAL_WIDTH_M) * goal_w + middle_third_width_start)
+            ball_y_px = int(goal_y + goal_h - (ball_y_m / GOAL_HEIGHT_M) * goal_h)
+
+            cv2.circle(frame, (ball_x_px, ball_y_px), 10, (0, 0, 255), -1)
+            cv2.putText(frame, "Predicted Ball", (ball_x_px + 10, ball_y_px - 10),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
+
+        # Pose tracking
         rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         results = pose.process(rgb_frame)
 
         if results.pose_landmarks:
-            # Draw skeleton on both frames
             mp_drawing.draw_landmarks(
-                color_frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS,
+                frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS,
                 mp_drawing.DrawingSpec(color=(0, 255, 0), thickness=2, circle_radius=2),
                 mp_drawing.DrawingSpec(color=(255, 0, 0), thickness=2, circle_radius=0)
             )
-            mp_drawing.draw_landmarks(
-                bw_frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS,
-                mp_drawing.DrawingSpec(color=(255, 255, 255), thickness=2, circle_radius=2),
-                mp_drawing.DrawingSpec(color=(255, 255, 255), thickness=2, circle_radius=0)
-            )
 
-        # Write frames
-        out_color.write(color_frame)
-        out_bw.write(bw_frame)
+        out.write(frame)
 
     cap.release()
-    out_color.release()
-    out_bw.release()
+    out.release()
     pose.close()
