@@ -3,6 +3,7 @@ import os
 import threading  
 from overlayFunc import process_video
 from datetime import datetime
+from overlayFuncMap import overlay_prediction
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
@@ -10,9 +11,12 @@ PROCESSED_FOLDER = 'uploads/processed'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(PROCESSED_FOLDER, exist_ok=True)
 
-def process_video_in_background(input_path, output_path):
+def process_video_in_background(input_path, output_path, output_path_BW):
     try:
-        process_video(input_path, output_path)
+        process_video(input_path, output_path, output_path_BW)
+        predPos = (1.2, 1.2)
+        output_path_pred = os.path.join(PROCESSED_FOLDER, "currentVidPred.mp4")
+        overlay_prediction(input_path, output_path_pred, predPos)
     except Exception as e:
         print(f"Processing error: {e}")
 
@@ -34,10 +38,11 @@ def upload():
     if file and file.filename.endswith('.mp4'):
         input_path = os.path.join(UPLOAD_FOLDER, "currentVid.mp4")
         output_path = os.path.join(PROCESSED_FOLDER, "currentVidProc.mp4")
+        output_path_BW = os.path.join(PROCESSED_FOLDER, "currentVidProcBW.mp4")
 
         file.save(input_path)
 
-        threading.Thread(target=process_video_in_background, args=(input_path, output_path)).start()
+        threading.Thread(target=process_video_in_background, args=(input_path, output_path, output_path_BW)).start()
 
         return render_template("loading.html")
 
@@ -45,7 +50,7 @@ def upload():
 
 @app.route('/results')
 def results():
-    video_path = os.path.join(PROCESSED_FOLDER, 'currentVidProc.mp4')
+    video_path = os.path.join(PROCESSED_FOLDER, 'currentVidPred.mp4')
     if not os.path.exists(video_path):
         return render_template('error.html')
     return render_template('processing.html')
