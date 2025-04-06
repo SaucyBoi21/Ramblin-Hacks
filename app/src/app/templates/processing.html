@@ -115,80 +115,78 @@
 </head>
 <body>
 
-    <!-- Sidebar copy paste from previous page -->
-    <!-- Sidebar -->
     <div class="sidebar bg-[#00CF78] w-1/5 min-h-screen fixed flex flex-col py-10 px-6 items-center">
       <div class="flex flex-col items-baseline">
-          <!-- Update the first SVG to have black color -->
           <object type="image/svg+xml" data="../static/icon.svg" class="w-36 h-36 mx-auto text-black fill-current"></object>
 
-          <!-- PK Prophet Section -->
-          <a href="/" class="flex items-center gap-3 mb-5 mt-5"> <!-- Flex container for the logo and header -->
+          <a href="/" class="flex items-center gap-3 mb-5 mt-5"> 
               <span class="text-[#00554B] text-5xl font-bold header hover:underline cursor-pointer">PK Prophet</span>
-              <img src="../static/arrow.svg" class="h-8 w-8"> <!-- Keep the arrow next to the header -->
+              <img src="../static/arrow.svg" class="h-8 w-8"> 
           </a>
 
-          <!-- Dotted Line Divider -->
           <div class="border-t-4 border-dashed border-[#00554B] w-full mb-5"></div>
 
-          <!-- About Section -->
-          <a href="/about" class="flex items-center gap-3 mb-5"> <!-- Flex container for the logo and header -->
+
+          <a href="/about" class="flex items-center gap-3 mb-5"> 
               <span class="text-[#00554B] text-5xl font-bold header hover:underline cursor-pointer">About</span>
-              <img src="../static/arrow.svg" class="h-8 w-8"> <!-- Keep the arrow next to the header -->
+              <img src="../static/arrow.svg" class="h-8 w-8">
           </a>
       </div>
   </div>
 
-    <!-- Main Content -->
     <div class="content">
-        <!-- About Page Content -->
         <h1 class="header">Your Analyzed Results!</h1>
 
-        <video id="videoPlayer" class="bordered-gif" width="600" preload="metadata">
-            <source src="/uploads/processed/currentVidProc.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+        <div id="videoContainer" style="display: none;">
+            <video id="videoPlayer" class="bordered-gif" width="600" preload="metadata">
+                <source src="/uploads/processed/currentVidProc.mp4?{{ timestamp() }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div id="loadingSpinner" style="text-align: center;">
+            <p>Loading video...</p>
+        </div>
 
         <input type="range" id="frameSlider" value="0" step="0.033" min="0" max="100" class="slider" />
 
         <script>
             const videoPlayer = document.getElementById('videoPlayer');
+            const videoContainer = document.getElementById('videoContainer');
+            const loadingSpinner = document.getElementById('loadingSpinner');
             const frameSlider = document.getElementById('frameSlider');
 
-            // Update the slider range based on the video duration
             videoPlayer.onloadedmetadata = function() {
+                videoContainer.style.display = 'block';
+                loadingSpinner.style.display = 'none';
+
                 frameSlider.max = videoPlayer.duration;
             };
 
-            // Update video current time when slider is changed
             frameSlider.addEventListener('input', function() {
                 videoPlayer.currentTime = frameSlider.value;
             });
-
-            // Sync the slider with the video current time
             videoPlayer.addEventListener('timeupdate', function() {
                 frameSlider.value = videoPlayer.currentTime;
             });
         </script>
 
         <div class="text-section">
-
           <h2 class="header">What is the blue box that moves as I scroll through the animation?</h2>
-          <p class="header">The blue box represents our model’s predicted trajectory of the soccer ball based on the player's positioning and movement. 
-              By analyzing body posture, foot placement, and historical kick data, the model estimates where the ball is most likely to go. 
-              As you scroll through the animation, the box updates dynamically to reflect the changing prediction at each frame.
+          <p class="header">The blue box represents our model's predicted trajectory of the soccer ball based on the player's positioning and movement
+            by placing potential points for where the goalpost is and where the ball would end up as soon as the soccer player kicks it to the goal.
           </p>
         </div>
       
         <div class="text-section">
           <h2 class="header">What is the virtual skeleton overlay over the soccer player?</h2>
-            <p class="header">The virtual skeleton overlay represents the key joints and movements of the soccer player's body during the kick. 
-                This visual model helps illustrate how the alignment of the legs, arms, and torso influences the ball's trajectory. 
-                By analyzing the angles and positions of these body parts, our system can better predict the direction and speed of the shot. 
-                This allows us to gain deeper insights into the player's mechanics, which are crucial for understanding the accuracy and success of their penalty kicks.
-            </p>
+          <p class="header"> The virtual skeleton overlay represents the key joints and movements of the soccer player's body during the kick. 
+            This visual model helps illustrate how the alignment of the legs, arms, and torso influences the ball's trajectory. 
+            By analyzing the angles and positions of these body parts, our system can better predict the direction and speed of the shot. 
+            This allows us to gain deeper insights into the player's mechanics, which are crucial for understanding the accuracy and success of their penalty kicks.
+        </p>
         </div>
-    </div>
 
+    </div>
 </body>
 </html>
