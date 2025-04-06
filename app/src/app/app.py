@@ -35,7 +35,7 @@ def process_video_in_background(input_path, output_path, output_path_BW):
         print(lstmOut.shape)
         print(lstmOut[0][1])
         output_path_pred = os.path.join(PROCESSED_FOLDER, "currentVidPred.mp4")
-        overlay_prediction(input_path, output_path_pred, (1.2,1.2))
+        overlay_prediction(input_path, output_path_pred, (lstmOut[0],lstmOut[1]))
     except Exception as e:
         print(f"Processing error: {e}")
 
@@ -102,8 +102,9 @@ def upload():
 def results():
     video_path = os.path.join(PROCESSED_FOLDER, 'currentVidPred.mp4')
     if not os.path.exists(video_path):
-        return render_template('home.html')
-    return render_template('processing.html')
+        return "Processing", 202
+    else:
+        return render_template('processing.html')
 
 @app.route('/uploads/processed/<path:filename>')
 def uploaded_file(filename):

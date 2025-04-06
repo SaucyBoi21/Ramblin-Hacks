@@ -40,19 +40,20 @@
 
     <script>
         function checkProcessingStatus() {
-            fetch('/results')
-                .then(response => {
-                    if (response.ok) {
-                        window.location.href = "{{ url_for('results') }}";
-                    } else {
-                        setTimeout(checkProcessingStatus, 2000);
-                    }
-                })
-                .catch(() => {
+        fetch('/results')
+            .then(response => {
+                if (response.ok && response.status === 200) {
+                    // Only redirect if video is ready
+                    window.location.href = "{{ url_for('results') }}";
+                } else {
                     setTimeout(checkProcessingStatus, 2000);
-                });
-        }
-        setTimeout(checkProcessingStatus, 5000);
+                }
+            })
+            .catch(() => {
+                setTimeout(checkProcessingStatus, 2000);
+            });
+    }
+    setTimeout(checkProcessingStatus, 5000);
     </script>
 </body>
 </html>
