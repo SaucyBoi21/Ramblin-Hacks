@@ -7,7 +7,7 @@ from overlayFuncMap import overlay_prediction
 import numpy as np
 import cv2
 
-from tensorflow.keras.models import load_model
+from tensorflow.keras.models import load_model # type: ignore
 
 CNN = load_model("../app/weights/full_CNN.keras")
 CNN.load_weights("../app/weights/CNN.weights.h5")
@@ -24,15 +24,14 @@ os.makedirs(PROCESSED_FOLDER, exist_ok=True)
 def process_video_in_background(input_path, output_path, output_path_BW):
     try:
         process_video(input_path, output_path, output_path_BW)
-        npArray = extract_and_resize_frames("/Users/andypauley/Documents/GitHub/Ramblin-Hacks/app/src/app/uploads/processed/currentVidPred.mp4", target_size=(224,224), max_frames=120)
-        #print(npArray)
+        npArray = extract_and_resize_frames(output_path_BW, target_size=(224,224), max_frames=120)
+        print(npArray.shape)
         cnnOut = np.expand_dims(CNN.predict(npArray), axis=0)
         print(cnnOut.shape)
         lstmOut = LSTM.predict(cnnOut)
         #print(lstmOut)
-        print(lstmOut.shape)
-        print(lstmOut[0][-1][0], lstmOut [0][-1][1])
-        print(lstmOut.any())
+        print(lstmOut[0])
+        print(lstmOut[0][0][0], lstmOut [0][0][1])
         output_path_pred = os.path.join(PROCESSED_FOLDER, "currentVidPred.mp4")
         overlay_prediction(input_path, output_path_pred, lstmOut)
     except Exception as e:
@@ -83,14 +82,17 @@ def about():
 
 @app.route('/upload', methods=['POST'])
 def upload():
+    print("TEST")
     file = request.files['file']
+    print(file.filename)
+    print('HEYEYEYEYEYEYEY')
     if file and file.filename.endswith('.mp4'):
         input_path = os.path.join(UPLOAD_FOLDER, "currentVid.mp4")
         output_path = os.path.join(PROCESSED_FOLDER, "currentVidProc.mp4")
         output_path_BW = os.path.join(PROCESSED_FOLDER, "currentVidProcBW.mp4")
 
         file.save(input_path)
-
+        print('saved' + input_path)
         threading.Thread(target=process_video_in_background, args=(input_path, output_path, output_path_BW)).start()
 
         return render_template("loading.html")
