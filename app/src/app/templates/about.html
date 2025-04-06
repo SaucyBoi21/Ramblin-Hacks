@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>PK Prophet</title>
-    <<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="shortcut icon" href="../static/icon.svg" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,38 +52,42 @@
     </section>
   
     <!-- How It Works Section -->
-    <section class="flex flex-col gap-4">
-      <h2 class="text-4xl header font-bold text-[#00CF78]">How It Works</h2>
-      <p class="text-2xl header leading-relaxed">
-        At the core of PK Prophet is a Long Short-Term Memory (LSTM) model — a form of recurrent neural network ideal for time-series predictions. Our model analyzes key visual cues such as body posture, foot placement, and contact angle just before the penalty is taken.
-      </p>
-      <p class="text-2xl header leading-relaxed">
-        We use <strong>OpenCV</strong> overlays to track player body movements and goal positioning, and integrate specialized tracking software to follow the ball’s trajectory in real time.
-      </p>
+    <section class="flex flex-row gap-4 items-center mt-20">
+        <div class="info flex flex-col gap-4">
+            <h2 class="text-4xl header font-bold text-[#00CF78]">How It Works</h2>
+            <p class="text-2xl header leading-relaxed">
+                At the core of PK Prophet is a Long Short-Term Memory (LSTM) model — a form of recurrent neural network ideal for time-series predictions. Our model analyzes key visual cues such as body posture, foot placement, and contact angle just before the penalty is taken.
+            </p>
+            <p class="text-2xl header leading-relaxed">
+                We use <strong>OpenCV</strong> overlays to track player body movements and goal positioning, and integrate specialized tracking software to predict the ball’s trajectory in real time.
+            </p>
+        </div>
+        <image class="image w-100 h-55" src="../static/about-image1.png"></image>
     </section>
   
     <!-- Data Collection Section -->
-    <section class="flex flex-col gap-4">
-      <h2 class="header text-4xl font-bold text-[#00CF78]">Data Collection</h2>
-      <p class="header text-2xl leading-relaxed">
-        Our dataset was carefully curated from publicly available footage on YouTube. Each video was manually selected, clipped, and annotated to ensure cleanliness, accuracy, and consistency. We focused on high-quality recordings with clear views of penalty kicks across different leagues and player styles.
-      </p>
+    <section class="flex flex-row gap-12 items-center mt-20">
+        <image class="image w-120 h-70" src="../static/about-image2.png"></image>
+    <div class="info flex flex-col gap-4">
+        <h2 class="header text-4xl font-bold text-[#00CF78]">Data Collection</h2>
+        <p class="header text-2xl leading-relaxed">
+            Our dataset was carefully curated from publicly available footage on YouTube. Each video was manually selected, clipped, and annotated to ensure cleanliness, accuracy, and consistency. We focused on high-quality recordings with clear views of penalty kicks across different leagues and player styles.
+        </p>
+    </div>
     </section>
   
     <!-- The Vision Section -->
     <section class="flex flex-col gap-4">
       <h2 class="header text-4xl font-bold text-[#00CF78]">Our Vision</h2>
-      <p class="header text-2xl leading-relaxed">
-        PK Prophet is more than a model — it's a glimpse into the future of AI-enhanced sports. We aim to provide tools that help players, coaches, analysts, and fans understand the game more deeply. By decoding patterns in body language and movement, we unlock insights never before accessible in real-time.
-      </p>
-    </section>
-  
-    <!-- Call to Action -->
-    <section class="flex flex-col gap-4">
-      <h2 class="header text-4xl font-bold text-[#00CF78]">Get Involved</h2>
-      <p class="header text-2xl leading-relaxed">
-        Whether you're a developer, researcher, coach, or simply a football fanatic, we’d love to hear your thoughts or collaborate. Reach out to us with your feedback, ideas, or questions — and help shape the future of predictive sports AI.
-      </p>
+        <p class="header text-2xl leading-relaxed">
+          With PK Prophet, our vision is to continuously push the boundaries of AI-driven sports analysis. While our current model focuses on standardized penalty kick footage, we are actively working to expand support for varied camera angles — including broadcast-style views, overhead drone shots, and sideline perspectives.
+        </p>
+        <p class="header text-2xl leading-relaxed">
+          We envision PK Prophet as a versatile tool for <strong>sports analysts</strong> seeking deeper insights, <strong>coaches</strong> who want to fine-tune technique, <strong>players</strong> aiming to sharpen their instincts, and even the <strong>entertainment industry</strong> looking to enhance sports content with predictive overlays and real-time analysis.
+        </p>
+        <p class="header text-2xl leading-relaxed">
+          As we continue to train and evolve our model, our goal remains the same: to unlock the hidden patterns behind every kick — no matter the camera, setting, or skill level.
+        </p>
     </section>
   
   </div>
