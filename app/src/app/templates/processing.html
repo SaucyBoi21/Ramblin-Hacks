@@ -7,71 +7,187 @@
     <link rel="shortcut icon" href="../static/icon.svg" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Judson:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black|Judson:400,700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-</head>
-<body class="bg-[#191919] flex">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #191919;
+            color: #fff;
+            margin: 0;
+            display: flex;
+        }
 
-    <!-- Sidebar -->
+        .sidebar {
+            background-color: #00CF78;
+            width: 20%;
+            min-height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 3rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar .logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 2rem;
+        }
+
+        .sidebar a {
+            color: #00554B;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .sidebar .arrow {
+            width: 24px;
+            height: 24px;
+        }
+
+        .content {
+            margin-left: 20%;
+            padding: 3rem;
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .content h1 {
+            font-size: 3rem;
+            color: #00CF78;
+            margin-bottom: 3rem;
+            font-weight: 700;
+        }
+
+        .content video {
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 2rem;
+            width: 100%;
+        }
+
+        .slider {
+            background-color: rgba(0, 207, 120, 0.3);
+            border-radius: 12px;
+            width: 100%;
+            margin-bottom: 3rem;
+            height: 6px;
+        }
+
+        .text-section {
+            width: 80%;
+            margin-bottom: 3rem;
+            text-align: left;
+        }
+
+        .text-section h2 {
+            font-size: 2rem;
+            color: #00CF78;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .text-section p {
+            color: #D1D1D1;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar copy paste from previous page -->
     <!-- Sidebar -->
     <div class="sidebar bg-[#00CF78] w-1/5 min-h-screen fixed flex flex-col py-10 px-6 items-center">
-        <div class="flex flex-col items-baseline">
-            <!-- Update the first SVG to have black color -->
-            <object type="image/svg+xml" data="../static/icon.svg" class="w-36 h-36 mx-auto text-black fill-current"></object>
+      <div class="flex flex-col items-baseline">
+          <!-- Update the first SVG to have black color -->
+          <object type="image/svg+xml" data="../static/icon.svg" class="w-36 h-36 mx-auto text-black fill-current"></object>
 
-            <!-- PK Prophet Section -->
-            <a href="/" class="flex items-center gap-3 mb-5 mt-5"> <!-- Flex container for the logo and header -->
-                <span class="text-[#00554B] text-5xl font-bold header hover:underline cursor-pointer">PK Prophet</span>
-                <img src="../static/arrow.svg" class="h-8 w-8"> <!-- Keep the arrow next to the header -->
-            </a>
+          <!-- PK Prophet Section -->
+          <a href="/" class="flex items-center gap-3 mb-5 mt-5"> <!-- Flex container for the logo and header -->
+              <span class="text-[#00554B] text-5xl font-bold header hover:underline cursor-pointer">PK Prophet</span>
+              <img src="../static/arrow.svg" class="h-8 w-8"> <!-- Keep the arrow next to the header -->
+          </a>
 
-            <!-- Dotted Line Divider -->
-            <div class="border-t-4 border-dashed border-[#00554B] w-full mb-5"></div>
+          <!-- Dotted Line Divider -->
+          <div class="border-t-4 border-dashed border-[#00554B] w-full mb-5"></div>
 
-            <!-- About Section -->
-            <a href="/about" class="flex items-center gap-3 mb-5"> <!-- Flex container for the logo and header -->
-                <span class="text-[#00554B] text-5xl font-bold header hover:underline cursor-pointer">About</span>
-                <img src="../static/arrow.svg" class="h-8 w-8"> <!-- Keep the arrow next to the header -->
-            </a>
-        </div>
-    </div>
-
+          <!-- About Section -->
+          <a href="/about" class="flex items-center gap-3 mb-5"> <!-- Flex container for the logo and header -->
+              <span class="text-[#00554B] text-5xl font-bold header hover:underline cursor-pointer">About</span>
+              <img src="../static/arrow.svg" class="h-8 w-8"> <!-- Keep the arrow next to the header -->
+          </a>
+      </div>
+  </div>
 
     <!-- Main Content -->
-    <div class="content ml-[25%] w-3/4 flex flex-col justify-center items-center">
-                <!-- About Page Content -->
-                <video id="videoPlayer" class="bordered-gif max-w-full h-auto" width="600" preload="metadata">
-                    <source src="/uploads/processed/currentVidProc.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                  </video>
-                  
-                  <input type="range" id="frameSlider" value="0" step="0.033" min="0" max="100" class="slider" />
-                  
-                  <script>
-                    const videoPlayer = document.getElementById('videoPlayer');
-                    const frameSlider = document.getElementById('frameSlider');
-                  
-                    // Update the slider range based on the video duration
-                    videoPlayer.onloadedmetadata = function() {
-                      frameSlider.max = videoPlayer.duration;
-                    };
-                  
-                    // Update video current time when slider is changed
-                    frameSlider.addEventListener('input', function() {
-                      videoPlayer.currentTime = frameSlider.value;
-                    });
-                  
-                    // Sync the slider with the video current time
-                    videoPlayer.addEventListener('timeupdate', function() {
-                      frameSlider.value = videoPlayer.currentTime;
-                    });
-                  </script>
-    <div class="text-white px-10 py-20 max-w-5xl mx-auto flex flex-col gap-16 font-sans">
+    <div class="content">
+        <!-- About Page Content -->
+        <h1 class="header">Your Analyzed Results!</h1>
 
-    
-  
-    </div>
+        <video id="videoPlayer" class="bordered-gif" width="600" preload="metadata">
+            <source src="/uploads/processed/currentVidProc.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <input type="range" id="frameSlider" value="0" step="0.033" min="0" max="100" class="slider" />
+
+        <script>
+            const videoPlayer = document.getElementById('videoPlayer');
+            const frameSlider = document.getElementById('frameSlider');
+
+            // Update the slider range based on the video duration
+            videoPlayer.onloadedmetadata = function() {
+                frameSlider.max = videoPlayer.duration;
+            };
+
+            // Update video current time when slider is changed
+            frameSlider.addEventListener('input', function() {
+                videoPlayer.currentTime = frameSlider.value;
+            });
+
+            // Sync the slider with the video current time
+            videoPlayer.addEventListener('timeupdate', function() {
+                frameSlider.value = videoPlayer.currentTime;
+            });
+        </script>
+
+        <div class="text-section">
+
+          <h2 class="header">What is the blue box that moves as I scroll through the animation?</h2>
+          <p class="header">The blue box represents our model’s predicted trajectory of the soccer ball based on the player's positioning and movement. 
+              By analyzing body posture, foot placement, and historical kick data, the model estimates where the ball is most likely to go. 
+              As you scroll through the animation, the box updates dynamically to reflect the changing prediction at each frame.
+          </p>
+        </div>
+      
+        <div class="text-section">
+          <h2 class="header">What is the virtual skeleton overlay over the soccer player?</h2>
+            <p class="header">The virtual skeleton overlay represents the key joints and movements of the soccer player's body during the kick. 
+                This visual model helps illustrate how the alignment of the legs, arms, and torso influences the ball's trajectory. 
+                By analyzing the angles and positions of these body parts, our system can better predict the direction and speed of the shot. 
+                This allows us to gain deeper insights into the player's mechanics, which are crucial for understanding the accuracy and success of their penalty kicks.
+            </p>
+        </div>
     </div>
 
 </body>
